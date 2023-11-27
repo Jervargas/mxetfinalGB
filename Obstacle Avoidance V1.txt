@@ -1,0 +1,75 @@
+***
+**
+* This code assumes the robot is only moving forward and has two sensors in the front one on the left side of the scuttle chassis
+and one on the right side of the chassis. There are also two sensors on the back parallel to the front sensors. These can be modified
+since the sensors in the back are pointless due to the robot only moving forward. Unless implementation of moving back is wanted. 
+
+*
+**
+***
+
+
+
+from gpiozero import DistanceSensor
+from time import sleep
+import L1_motor as drive
+
+#Pin in/out may n
+sensor1 = DistanceSensor(echo=25, trigger=24) #This sensor is on upper  left corner of scuttle.
+sensor2 = DistanceSensor(echo=6, trigger=5) #This sensor is on upper  right corner of scuttle.
+sensor3 = DistanceSensor(echo=19, trigger=13	) #This sensor is on lower  left corner of scuttle.
+sensor4 = DistanceSensor(echo=21, trigger=20) #This sensor is on lower  right corner of scuttle.
+
+while True:
+    print("Distance upper left", sensor1.distance *100) #Prints the distance of the upper left sensor
+    print("Distance upper right", sensor2.distance *100) #Prints the distance of the upper right sensor
+    print("Distance lower left", sensor3.distance *100) #Prints the distance of the lower left sensor
+    print("Distance lower right", sensor4.distance *100) #Prints the distance of the lower right sensor
+
+    #Robot is going forward on startup
+    drive.sendLeft(0.8) #sets speed for left wheel
+    drive.sendRight(0.8) #sets speed for right wheel
+
+    #Taking left short path to avoid obstacle** Can modify for right path
+    if ((sensor1.distance*100) < 20) and ((sensor1.distance*100) > 10) : #If upper left sensor's distance to object is less than 20 cm but greater than 10cm
+
+	#Stops Robot
+        drive.sendLeft(0) #Stops left wheel
+        drive.sendRight(0) #Stops right wheel
+	sleep(1) #Takes 1 second before continuing
+        print("Shorter distance is left")
+
+	#Turns Left
+        drive.sendLeft(0) 
+        drive.sendRight(0.8)
+	sleep(1) 
+
+	#Drives Forward
+   	drive.sendLeft(0.8)
+   	drive.sendRight(0.8)
+	sleep(1)
+
+	#Turns Right
+        drive.sendLeft(0.8)
+        drive.sendRight(0)
+	sleep(1)
+
+	#Drives Forward
+   	drive.sendLeft(0.8)
+   	drive.sendRight(0.8)
+	sleep(1)
+
+
+    #If object is way too close
+    if (sensor1.distance*100) < 10: #If upper left sensor's distance to object is less than 10 cm
+
+	#Stops Robot
+        drive.sendLeft(0) #Stops left wheel
+        drive.sendRight(0) #Stops right wheel
+	sleep(1) #Takes 1 second before continuing
+        print("Shorter distance is left")
+
+
+
+
+
