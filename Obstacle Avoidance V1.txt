@@ -2,7 +2,7 @@
 **
 * This code assumes the robot is only moving forward and has two sensors in the front one on the left side of the scuttle chassis
 and one on the right side of the chassis. There are also two sensors on the back parallel to the front sensors. These can be modified
-since the sensors in the back are pointless due to the robot only moving forward. Unless implementation of moving back is wanted. 
+since the robot only moving forward. Unless implementation of moving back is wanted. 
 
 *
 **
